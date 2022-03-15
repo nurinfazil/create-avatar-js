@@ -1,0 +1,45 @@
+.avatar-maker{
+    border: 4px solid black; 
+    border-radius: 10px; 
+    background-color: #FCF5F4; 
+    padding: 0.5rem 1.5rem; 
+    font-family: 'Nunito'; 
+    font-style: normal; 
+    font-weight: 700;
+}
+
+.maker-title {
+    text-decoration: underline; 
+    font-weight: 700; 
+    font-size: 26px; 
+    line-height: 56px; 
+    text-align: center
+}
+
+.contents {
+    display: flex;
+    flex-direction: row;
+}
+
+#save-button-div {
+    display: flex;
+    justify-content: flex-end;
+}
+
+#save-button-div button{
+    font-family: 'Nunito';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 19px;
+    line-height: 30px;
+    background: #F8D9D7;
+    border: 4px solid #000000;
+    box-shadow: 1px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 13px;
+    padding: 0rem 1rem;
+}
+
+#save-button-div button:hover {
+    transform: scale(1.03);
+    cursor: pointer; 
+}

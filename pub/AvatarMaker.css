@@ -19,6 +19,7 @@
 .contents {
     display: flex;
     flex-direction: row;
+    justify-content: center;
 }
 
 #save-button-div {
@@ -68,4 +69,25 @@
 
 .currently-selected {
     border-bottom: 3px solid black;
+}
+
+.view-avatar{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    flex: 2;
+}
+
+#left-arrow, #right-arrow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+/* styles will change */
+#my-avatar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }

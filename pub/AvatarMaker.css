@@ -43,3 +43,29 @@
     transform: scale(1.03);
     cursor: pointer; 
 }
+
+.legend{
+    border: 5px solid #7C4E41;
+    box-shadow: 4px 7px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 15px;
+    padding: 1rem;
+}
+
+.legend-feature{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    cursor: pointer;
+}
+
+.arrow-container{
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.currently-selected {
+    border-bottom: 3px solid black;
+}

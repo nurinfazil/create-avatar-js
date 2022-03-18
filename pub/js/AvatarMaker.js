@@ -455,6 +455,27 @@ AvatarMaker.prototype.rightArrowClicked = function () {
 
 AvatarMaker.prototype.leftArrowClicked = function () {
     console.log("clicked left")
+
+    const featureBeingEditedName = Object.keys(this.selectedSVGs)[this.currentlyEditing]
+
+    let featureContainer = document.querySelector(`#${featureBeingEditedName}-svg`)
+
+    featureContainer.innerHTML = ""
+
+    // loop through the svgs of the currently editing element
+    const lengthOfCurrent = Object.values(this.featureSVGs)[this.currentlyEditing].length
+
+    // SVG currently showing
+    let currentlySelectedSVG = Object.values(this.selectedSVGs)[this.currentlyEditing]
+
+    if (currentlySelectedSVG - 1 < 0) {
+        currentlySelectedSVG = lengthOfCurrent - 1
+    } else
+        currentlySelectedSVG -= 1
+
+    this.selectedSVGs[featureBeingEditedName] = currentlySelectedSVG
+
+    featureContainer.innerHTML = Object.values(this.featureSVGs)[this.currentlyEditing][currentlySelectedSVG]
 }
 
 

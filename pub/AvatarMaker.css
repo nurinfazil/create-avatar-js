@@ -98,5 +98,25 @@
 }
 
 #base-avg, #hair-svg, #eyes-svg, #nose-svg, #mouth-svg, #facialHair-svg, #clothes-svg, #accessories-svg, #glasses-svg{
-    position: fixed
+    position: absolute
+}
+
+.colour-selector {
+    display: flex;
+    flex-direction: row;
+}
+
+.colour-view-circle{
+    height: 25px;
+    width: 25px;
+    border-radius: 50%;
+    background-color: white;
+    border: 3px solid black;
+}
+
+#colour-input {
+    height: 25px;
+    border: 3px solid black;
+    border-radius: 10px;
+    margin-left: 1rem;
 }

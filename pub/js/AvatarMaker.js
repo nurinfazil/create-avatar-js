@@ -1,23 +1,25 @@
-"use strict"
+"use strict";
 
-function AvatarMaker() {
-    this.id = generateRandomId()
-    this.currentlyEditing = 0
+(function (global, document, $) {
 
-    this.features = [
-        "Base",
-        "Hair",
-        "Eyes",
-        "Nose",
-        "Mouth",
-        "Facial Hair",
-        "Clothes",
-        "Accessories",
-        "Glasses"
-    ]
+    function AvatarMaker() {
+        this.id = generateRandomId()
+        this.currentlyEditing = 0
 
-    this.featureSVGs = {
-        base: [`<svg width="270" height="270" viewBox="0 0 320 320" fill="none" xmlns="http://www.w3.org/2000/svg">
+        this.features = [
+            "Base",
+            "Hair",
+            "Eyes",
+            "Nose",
+            "Mouth",
+            "Facial Hair",
+            "Clothes",
+            "Accessories",
+            "Glasses"
+        ]
+
+        this.featureSVGs = {
+            base: [`<svg width="270" height="270" viewBox="0 0 320 320" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path fill-rule="evenodd" clip-rule="evenodd" d="M290.963 248.235C280.351 232.884 264.706 221.726 246.736 216.692L204.999 205V175.001C222.643 161.747 234.23 140.89 234.942 117.297C237.408 118.384 240.13 119 243 119C254.045 119 263 110.046 263 99C263 87.954 254.045 79 243 79C240.153 79 237.451 79.603 235 80.675V75C235 33.578 201.421 0 160 0H159.999C118.578 0 85 33.578 85 75V80.675C82.548 79.603 79.846 79 77 79C65.954 79 57 87.954 57 99C57 110.046 65.954 119 77 119C79.869 119 82.591 118.385 85.058 117.297C85.769 140.89 97.356 161.747 114.999 175.001V205L73.263 216.692C55.293 221.726 39.648 232.884 29.036 248.235L0 290.24V320H320V290.24L290.963 248.235Z" fill="#FFCF83"/>
         <path fill-rule="evenodd" clip-rule="evenodd" d="M159.999 190C150.751 190 141.899 188.316 133.719 185.255C145.353 192.687 159.169 197 173.999 197C185.059 197 195.548 194.587 204.999 190.29V175.001C192.464 184.417 176.884 190 159.999 190Z" fill="#F7A74F"/>
         <path d="M87.6086 101.919C87.8636 100.99 88.0006 100.011 88.0006 99.0005C88.0006 92.9255 83.0756 88.0005 77.0006 88.0005C75.4816 88.0005 74.0346 88.3085 72.7186 88.8645" stroke="#00004D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -43,8 +45,8 @@ function AvatarMaker() {
         <path d="M73.9198 85.9938C74.1349 85.21 74.2505 84.3839 74.2505 83.5317C74.2505 78.406 70.095 74.2505 64.9693 74.2505C63.6876 74.2505 62.4667 74.5104 61.3563 74.9795" stroke="#00004D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
         <path d="M196.08 85.9938C195.865 85.21 195.75 84.3839 195.75 83.5317C195.75 78.406 199.906 74.2505 205.031 74.2505C206.312 74.2505 207.533 74.5104 208.644 74.9795" stroke="#00004D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>`],
-        hair: [`<svg width="300" height="314" viewBox="0 30 290 314" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path fill-rule="evenodd" clip-rule="evenodd" d="M209.444 120.164V116.744C209.444 104.388 205.958 92.8489 199.923 83.0449C194.33 73.959 186.54 66.3779 177.299 61.0158C167.8 55.5038 156.774 52.3333 145 52.3333C133.227 52.3333 122.2 55.5038 112.701 61.0158C103.46 66.3779 95.6702 73.959 90.0772 83.0449C84.0428 92.8489 80.5555 104.388 80.5555 116.744V120.164C85.0248 120.838 88.8914 123.333 91.3645 126.884L97.4738 101.651C99.2235 94.4254 105.695 89.3361 113.133 89.3361H176.868C184.305 89.3361 190.776 94.4254 192.526 101.651L198.635 126.884C201.109 123.333 204.975 120.838 209.444 120.164" fill="#00004D"/>
+            hair: [`<svg width="300" height="314" viewBox="0 30 290 314" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path   fill-rule="evenodd" clip-rule="evenodd" d="M209.444 120.164V116.744C209.444 104.388 205.958 92.8489 199.923 83.0449C194.33 73.959 186.54 66.3779 177.299 61.0158C167.8 55.5038 156.774 52.3333 145 52.3333C133.227 52.3333 122.2 55.5038 112.701 61.0158C103.46 66.3779 95.6702 73.959 90.0772 83.0449C84.0428 92.8489 80.5555 104.388 80.5555 116.744V120.164C85.0248 120.838 88.8914 123.333 91.3645 126.884L97.4738 101.651C99.2235 94.4254 105.695 89.3361 113.133 89.3361H176.868C184.305 89.3361 190.776 94.4254 192.526 101.651L198.635 126.884C201.109 123.333 204.975 120.838 209.444 120.164" fill="#00004D"/>
         </svg>`, `<svg width="301" height="326" viewBox="0 30 301 326" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path fill-rule="evenodd" clip-rule="evenodd" d="M217.389 124.757V121.205C217.389 108.377 213.769 96.3973 207.506 86.2186C201.701 76.7855 193.616 68.9146 184.024 63.3476C174.165 57.625 162.72 54.3333 150.5 54.3333C138.279 54.3333 126.835 57.625 116.976 63.3476C107.384 68.9146 99.299 76.7855 93.4939 86.2186C87.2306 96.3973 83.6111 108.377 83.6111 121.205V124.757C87.0993 125.283 90.2322 126.876 92.6645 129.206C100.368 121.476 106.572 112.253 110.793 101.999C122.606 108.384 136.129 112.01 150.5 112.01C164.871 112.01 178.394 108.384 190.207 101.999C194.427 112.253 200.632 121.476 208.335 129.206C210.768 126.876 213.901 125.283 217.389 124.757" fill="#00004D"/>
         </svg>`, `<svg width="302" height="388" viewBox="0 30 302 328" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -96,7 +98,7 @@ function AvatarMaker() {
         </svg>`, `<svg width="294" height="320" viewBox="0 30 294 320" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path fill-rule="evenodd" clip-rule="evenodd" d="M213.674 122.313C208.789 122.643 204.501 125.125 201.729 128.833L199.081 115.524H169.828L161.798 91.8807V115.524H94.9192L92.2699 128.833C89.4982 125.125 85.2115 122.643 80.3254 122.313V122.298L82.4691 108.668C83.8362 99.9693 86.9052 91.8413 91.3201 84.6315C96.9894 75.3728 104.887 67.6469 114.255 62.1822C123.886 56.565 135.064 53.333 147 53.333C158.936 53.333 170.115 56.565 179.744 62.1822C189.113 67.6469 197.011 75.3728 202.68 84.6315C207.093 91.8413 210.164 99.9693 211.531 108.668L213.674 122.298V122.313ZM76.1645 235.235L110.25 225.641V201.005C95.8544 190.128 86.3778 173.032 85.7971 153.679C83.7824 154.572 81.5594 155.077 79.2164 155.077C77.7521 155.077 76.3409 154.865 74.991 154.502L61.3126 241.5C65.9586 238.825 70.9379 236.706 76.1645 235.235ZM214.783 155.077C212.44 155.077 210.217 154.572 208.202 153.68C207.621 173.032 198.145 190.129 183.75 201.006V225.641L217.834 235.234C223.062 236.706 228.041 238.825 232.687 241.5L219.01 154.503C217.659 154.865 216.248 155.077 214.783 155.077Z" fill="#00004D"/>
         </svg>`, ""],
-        eyes: [`<svg width="89" height="150" viewBox="0 55 89 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+            eyes: [`<svg width="89" height="150" viewBox="0 55 89 36" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path fill-rule="evenodd" clip-rule="evenodd" d="M80.9905 18C80.9905 21.9762 77.8025 25.2 73.8705 25.2C69.9385 25.2 66.7505 21.9762 66.7505 18C66.7505 14.0238 69.9385 10.8 73.8705 10.8C77.8025 10.8 80.9905 14.0238 80.9905 18" fill="#00004D"/>
         <path fill-rule="evenodd" clip-rule="evenodd" d="M22.25 18C22.25 21.9762 19.062 25.2 15.13 25.2C11.198 25.2 8.01001 21.9762 8.01001 18C8.01001 14.0238 11.198 10.8 15.13 10.8C19.062 10.8 22.25 14.0238 22.25 18" fill="#00004D"/>
         </svg>`, `<svg width="88" height="150" viewBox="0 55 88 35" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -124,14 +126,14 @@ function AvatarMaker() {
         <path fill-rule="evenodd" clip-rule="evenodd" d="M17.8353 24.1354C22.5054 22.4353 24.9138 17.2702 23.2146 12.6001L6.30005 18.7561C7.99925 23.4271 13.1652 25.8355 17.8353 24.1354" fill="#00004D"/>
         <path fill-rule="evenodd" clip-rule="evenodd" d="M71.6244 24.1354C66.9543 22.4353 64.545 17.2702 66.2451 12.6001L83.1597 18.7561C81.4596 23.4271 76.2945 25.8355 71.6244 24.1354" fill="#00004D"/>
         </svg>`],
-        nose: [`<svg width="29" height="150" viewBox="0 35 29 43" fill="none" xmlns="http://www.w3.org/2000/svg">
+            nose: [`<svg width="29" height="150" viewBox="0 35 29 43" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M12.325 8.6001L19.575 32.9668L9.42505 34.4001" stroke="#00004D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>`, `<svg width="32" height="150" viewBox="0 35 32 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+        </svg>`, `<svg width="32" height="150" viewBox="0 38 32 48" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M13.4749 9.6001L21.2837 29.6801C22.9157 33.8761 19.8205 38.4001 15.3189 38.4001H10.2749" stroke="#00004D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>`, `<svg width="29" height="150" viewBox="0 35 29 43" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M10.875 8.6001L21.025 31.5334L7.97498 34.4001" stroke="#00004D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>`],
-        mouth: [`<svg width="80" height="60" viewBox="0 -10 80 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+            mouth: [`<svg width="80" height="60" viewBox="0 -10 80 60" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path fill-rule="evenodd" clip-rule="evenodd" d="M60.0001 9.49976C60.0001 20.5458 51.0461 29.4998 40.0001 29.4998C28.9541 29.4998 20.0001 20.5458 20.0001 9.49976H60.0001Z" fill="white"/>
         </svg>`, `<svg width="80" height="60" viewBox="0 -10 80 60" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path fill-rule="evenodd" clip-rule="evenodd" d="M60 9.49951C60 20.5455 51.046 29.4995 40 29.4995C28.954 29.4995 20 20.5455 20 9.49951H60Z" fill="#AE1328"/>
@@ -162,7 +164,7 @@ function AvatarMaker() {
         </svg>`, `<svg width="80" height="60" viewBox="0 -15 80 60" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path fill-rule="evenodd" clip-rule="evenodd" d="M52 16.0998C52 12.4538 49.045 9.49878 45.4 9.49878C43.166 9.49878 41.194 10.6128 40 12.3118C38.806 10.6128 36.834 9.49878 34.6 9.49878C30.955 9.49878 28 12.4538 28 16.0998C28 16.3278 28.012 16.5528 28.034 16.7748C28.386 23.0858 33.601 28.0998 40 28.0998C46.399 28.0998 51.614 23.0858 51.966 16.7748C51.988 16.5528 52 16.3278 52 16.0998" fill="#AE1328"/>
         </svg>`],
-        facialHair: ["", `<svg width="150" height="134" viewBox="0 -30 150 134" fill="none" xmlns="http://www.w3.org/2000/svg">
+            facialHair: ["", `<svg width="150" height="134" viewBox="0 -30 150 134" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path fill-rule="evenodd" clip-rule="evenodd" d="M89.8808 41.9001L83.3667 45.6999C78.1933 48.7182 71.8067 48.7182 66.6325 45.6999L60.1183 41.9001C56.6633 39.8843 55.1175 35.6875 56.4342 31.897L57.5533 28.676C58.02 27.331 59.2825 26.429 60.7 26.429H89.2992C90.7167 26.429 91.9792 27.331 92.4458 28.676L93.565 31.897C94.8817 35.6875 93.3358 39.8843 89.8808 41.9001M131.851 0L127.538 14.1429C125.186 21.8588 119.289 27.9692 111.687 30.5688L103.669 33.3099L100.462 26.9558C97.6225 21.3286 91.8775 17.7826 85.5983 17.7826H75H64.4008C58.1225 17.7826 52.3767 21.3286 49.5367 26.9558L46.33 33.3099L38.3117 30.5688C30.71 27.9692 24.8133 21.8588 22.4608 14.1429L18.1483 0C16.58 1.73195 14.665 3.13811 12.5 4.08951V15.5172C12.5 35.3919 24.1542 53.3982 42.2317 61.4549L61.4875 70.0351C70.0917 73.8692 79.9075 73.8692 88.5108 70.0351L107.767 61.4541C125.844 53.3982 137.5 35.3919 137.5 15.5172V4.08951C135.335 3.13811 133.419 1.73195 131.851 0" fill="#00004D"/>
         </svg>`, `<svg width="151" height="134" viewBox="0 -30 151 134" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path fill-rule="evenodd" clip-rule="evenodd" d="M90.4803 41.9004L83.9227 45.7001C78.7149 48.7185 72.2857 48.7185 67.0778 45.7001L60.5194 41.9004C57.0414 39.8845 55.4852 35.6878 56.8107 31.8973L57.9365 28.6762C58.4071 27.3312 59.678 26.4292 61.105 26.4292H89.8948C91.3217 26.4292 92.5926 27.3312 93.0624 28.6762L94.1891 31.8973C95.5145 35.6878 93.9584 39.8845 90.4803 41.9004M132.73 0.000244141L128.389 14.1431C126.021 21.859 120.085 27.9694 112.432 30.569L104.361 33.3101L101.133 26.956C98.2736 21.3289 92.4903 17.7829 86.1693 17.7829H75.5003H64.8305C58.5103 17.7829 52.7261 21.3289 49.8672 26.956L46.6392 33.3101L38.5674 30.569C30.915 27.9694 24.979 21.859 22.6109 14.1431L18.2696 0.000244141C16.6908 1.73219 14.7622 3.13836 12.5836 4.08976V32.2674C12.5836 52.1422 24.3163 70.1484 42.5135 78.2051L61.8985 86.7853C70.5592 90.6194 80.4405 90.6194 89.1012 86.7853L108.485 78.2051C126.683 70.1484 138.417 52.1422 138.417 32.2674V4.08976C136.238 3.13836 134.309 1.73219 132.73 0.000244141" fill="#00004D"/>
@@ -179,7 +181,7 @@ function AvatarMaker() {
         </svg>`, `<svg width="160" height="142" viewBox="0 -35 160 142" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path fill-rule="evenodd" clip-rule="evenodd" d="M109.229 21.3202L96.3434 23.452L86.9905 19.2044C86.515 18.9888 86.0047 18.8281 85.467 18.7341C83.4154 18.3728 81.4261 19.0473 80.0225 20.3768C78.6181 19.0473 76.6287 18.3728 74.5781 18.7341C74.0394 18.8281 73.5292 18.9888 73.0536 19.2044L63.7007 23.452L50.8154 21.3202C49.9701 21.1809 49.435 22.1971 50.0305 22.813L54.2652 27.1866C58.3701 31.4289 64.3176 33.3574 70.1363 32.3323L76.7727 31.1644C78.0412 30.9407 79.1532 30.3532 80.0225 29.5287C80.891 30.3532 82.003 30.9407 83.2714 31.1644L89.9088 32.3323C95.7274 33.3574 101.674 31.4289 105.779 27.1866L110.014 22.813C110.609 22.1971 110.074 21.1809 109.229 21.3202" fill="#00004D"/>
         </svg>`],
-        clothes: [`<svg width="268" height="300" viewBox="0 -77 268 117" fill="none" xmlns="http://www.w3.org/2000/svg">
+            clothes: [`<svg width="268" height="300" viewBox="0 -77 268 117" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path fill-rule="evenodd" clip-rule="evenodd" d="M268 92.1291L243.682 57.0249C234.795 44.1967 221.692 34.871 206.641 30.664L171.687 20.8928C171.687 41.6628 154.814 58.5 134 58.5V58.5C113.186 58.5 96.3125 41.6628 96.3125 20.8928L61.3578 30.664C46.3079 34.871 33.2052 44.1967 24.3176 57.0249L0 92.1291V117H268V92.1291Z" fill="#80C43B"/>
         </svg>`, `<svg width="268" height="300" viewBox="0 -77 268 117" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path fill-rule="evenodd" clip-rule="evenodd" d="M0 92.1283V117H268V92.1292L243.682 57.025C234.794 44.1959 221.692 34.871 206.641 30.664L181.921 23.7527L134 81.361L86.0791 23.7527L61.3586 30.664C46.3079 34.871 33.2052 44.1959 24.3176 57.025L0 92.1283Z" fill="#80C43B"/>
@@ -202,7 +204,7 @@ function AvatarMaker() {
         <path fill-rule="evenodd" clip-rule="evenodd" d="M270 92.9168L245.501 57.5126C236.547 44.5747 223.347 35.1693 208.183 30.9264L177.188 22.2517V4.21453C177.188 1.88656 175.299 0.000244141 172.969 0.000244141V4.21537C162.392 12.1517 149.247 16.8574 135 16.8574C120.753 16.8574 107.608 12.1517 97.0312 4.21537V0.000244141C94.7008 0.000244141 92.8125 1.88656 92.8125 4.21453V22.2517L61.8165 30.9264C46.6535 35.1693 33.453 44.5747 24.4991 57.5126L0 92.916V118H270V92.9168Z" fill="#80C43B"/>
         <path d="M157.324 34.3052C150.381 36.9206 142.858 38.3509 135 38.3509C118.792 38.3509 104.006 32.2629 92.8099 22.2515" stroke="#00004D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>`],
-        accessories: ["", `<svg width="302" height="327" viewBox="0 31 302 327" fill="none" xmlns="http://www.w3.org/2000/svg">
+            accessories: ["", `<svg width="302" height="327" viewBox="0 31 302 327" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path fill-rule="evenodd" clip-rule="evenodd" d="M201.461 78.9164L192.849 60.9632C187.268 49.3262 175.503 41.9226 162.591 41.9226H139.409C126.498 41.9226 114.732 49.3262 109.151 60.9632L100.539 78.9164C51.42 87.6372 16.7781 108.706 16.7781 133.316C16.7781 157.297 49.6743 177.915 96.8072 187.023C91.591 178.184 88.462 167.967 88.1323 157.041C86.0628 157.954 83.7793 158.47 81.3725 158.47C72.1062 158.47 64.5947 150.961 64.5947 141.7C64.5947 132.439 72.1062 124.931 81.3725 124.931C83.76 124.931 86.0267 125.437 88.0836 126.336V123.254C88.0836 109.896 116.252 99.0671 151 99.0671C185.748 99.0671 213.917 109.896 213.917 123.254V126.336C215.973 125.437 218.24 124.931 220.628 124.931C229.894 124.931 237.406 132.439 237.406 141.7C237.406 150.961 229.894 158.47 220.628 158.47C218.221 158.47 215.937 157.954 213.867 157.041C213.538 167.967 210.409 178.184 205.192 187.023C252.326 177.915 285.223 157.297 285.223 133.316C285.223 108.706 250.581 87.6372 201.461 78.9164" fill="#844123"/>
         <path d="M100.538 78.9123C116.117 76.1462 133.151 74.6235 151 74.6235C162.285 74.6235 173.244 75.2314 183.717 76.3793" stroke="#00004D" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>`, `<svg width="308" height="333" viewBox="0 30 308 333" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -224,7 +226,7 @@ function AvatarMaker() {
         <path fill-rule="evenodd" clip-rule="evenodd" d="M202.883 95.0648C202.51 90.1813 199.049 85.2249 192.701 80.9723C186.796 57.9486 165.935 40.9326 141.107 40.9326C116.341 40.9326 95.5252 57.8646 89.5601 80.8005C83.0467 85.09 79.4951 90.1154 79.1167 95.0648C78.6491 101.176 77.6691 111.458 77.1349 116.966C79.2773 117.122 81.2967 117.706 83.1149 118.639C86.6845 114.288 101.981 99.0357 141 99.0357C180.019 99.0357 195.316 114.288 198.885 118.639C200.703 117.706 202.723 117.122 204.865 116.966C204.331 111.458 203.351 101.176 202.883 95.0648" fill="#FB344F"/>
         <path d="M89.5609 80.787C99.7137 74.106 117.089 69.2202 141 69.2202C151.172 69.2202 160.161 70.1045 167.915 71.6353" stroke="#000066" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>`],
-        glasses: ["", `<svg width="160" height="200" viewBox="0 50 160 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+            glasses: ["", `<svg width="160" height="200" viewBox="0 50 160 80" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path fill-rule="evenodd" clip-rule="evenodd" d="M138 40.0003C138 52.7023 127.702 63.0003 115 63.0003C102.298 63.0003 92 52.7023 92 40.0003C92 27.2973 102.298 17.0003 115 17.0003C127.702 17.0003 138 27.2973 138 40.0003Z" stroke="#00004D" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
         <path fill-rule="evenodd" clip-rule="evenodd" d="M22 40.0003C22 52.7023 32.297 63.0003 45 63.0003C57.703 63.0003 68 52.7023 68 40.0003C68 27.2973 57.703 17.0003 45 17.0003C32.297 17.0003 22 27.2973 22 40.0003Z" stroke="#00004D" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
         <path d="M66.5747 32.0179C68.2897 26.2259 73.6517 21.9999 79.9997 21.9999C86.3487 21.9999 91.7097 26.2259 93.4257 32.0179" stroke="#00004D" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
@@ -233,261 +235,264 @@ function AvatarMaker() {
         </svg>`, `<svg width="160" height="200" viewBox="0 52 160 80" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path fill-rule="evenodd" clip-rule="evenodd" d="M113 55.442C103.074 55.442 95 47.368 95 37.442C95 25.019 107.588 23.677 113 23.677C118.412 23.677 131 25.019 131 37.442C131 47.368 122.926 55.442 113 55.442ZM47 55.442C37.074 55.442 29 47.368 29 37.442C29 25.019 41.588 23.677 47 23.677C52.412 23.677 65 25.019 65 37.442C65 47.368 56.926 55.442 47 55.442ZM141 26.303H133.105L127.708 22.106C125.953 20.741 123.793 20 121.569 20H104.144C101.773 20 99.48 20.841 97.673 22.376L90 28.887L80.928 24.136C80.347 23.833 79.653 23.833 79.072 24.136L70 28.887L62.327 22.376C60.52 20.841 58.227 20 55.856 20H38.431C36.207 20 34.047 20.741 32.292 22.106L26.895 26.303H19C17.896 26.303 17 27.199 17 28.303V30.139C17 31.244 17.896 32.139 19 32.139H21C22.657 32.139 24 33.482 24 35.139V36.115C24 48.275 33.265 58.678 45.396 59.505C55.969 60.226 65.167 53.755 68.583 44.507L68.584 44.509L72.047 36.413C73.409 33.229 76.537 31.165 80 31.165C83.463 31.165 86.591 33.229 87.953 36.413L91.416 44.509L91.417 44.507C94.833 53.756 104.032 60.226 114.604 59.505C126.735 58.677 136 48.275 136 36.115V35.139C136 33.482 137.343 32.139 139 32.139H141C142.104 32.139 143 31.244 143 30.139V28.303C143 27.199 142.104 26.303 141 26.303Z" fill="#000066"/>
         </svg>`],
-    }
-
-    this.selectedSVGs = {
-        base: 0,
-        hair: 0,
-        eyes: 0,
-        nose: 0,
-        mouth: 0,
-        facialHair: 0,
-        clothes: 0,
-        accessories: 0,
-        glasses: 0
-    }
-
-
-}
-
-AvatarMaker.prototype = {
-    createGenerator: makeNewGenerator,
-}
-
-/**
- * Creates new Avatar Maker Window
- * @param {*} containerSelector selector for the container in which the AvatarMaker window will reside in
- */
-function makeNewGenerator(containerSelector) {
-
-    // link css
-    var linkTag = document.createElement("link");
-    linkTag.setAttribute("rel", "stylesheet");
-    linkTag.setAttribute("type", "text/css");
-    linkTag.setAttribute("href", "AvatarMaker.css");
-    document.getElementsByTagName("head")[0].appendChild(linkTag);
-
-    // Outer window
-    const generatorWindow = document.createElement("div")
-    generatorWindow.id = "avatar-maker-" + this.id
-    generatorWindow.className = "avatar-maker"
-
-    // Title div
-    const title = document.createElement("div")
-    title.className = "maker-title"
-    title.innerText = "Create Your Avatar"
-
-    // Contents div
-    const contents = document.createElement("div")
-    contents.className = "contents"
-
-    const legendContainer = document.createElement("div")
-    legendContainer.className = "legend"
-    const viewAvatar = document.createElement("div")
-    viewAvatar.className = "view-avatar"
-    const colourSelector = document.createElement("div")
-    colourSelector.className = "colour-selector"
-
-    // Save button div
-    const saveDiv = document.createElement("div")
-    const saveButton = document.createElement("button")
-    saveDiv.id = "save-button-div"
-    saveButton.innerText = "Save"
-    saveDiv.append(saveButton)
-
-    generatorWindow.append(title)
-    generatorWindow.append(contents)
-    generatorWindow.append(saveDiv)
-
-    contents.append(legendContainer)
-    contents.append(viewAvatar)
-    contents.append(colourSelector)
-
-    // Set up legend 
-    this.features.map((feature, i) => {
-        const featureContainer = document.createElement("div")
-        featureContainer.className = "legend-feature"
-        featureContainer.id = feature.toLowerCase()
-        const arrowContainer = document.createElement("div")
-        arrowContainer.className = "arrow-container"
-        const featureName = document.createElement("div")
-        featureName.className = "feature-name"
-
-
-        if (i == this.currentlyEditing) {
-            featureName.classList.add("currently-selected")
-            arrowContainer.innerHTML = `<svg width="20" height="20" viewBox="0 0 44 38" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M42.7678 20.7678C43.7441 19.7915 43.7441 18.2085 42.7678 17.2322L26.8579 1.32233C25.8816 0.34602 24.2986 0.34602 23.3223 1.32233C22.346 2.29864 22.346 3.88155 23.3223 4.85786L37.4645 19L23.3223 33.1421C22.346 34.1184 22.346 35.7014 23.3223 36.6777C24.2986 37.654 25.8816 37.654 26.8579 36.6777L42.7678 20.7678ZM0 21.5H41V16.5H0V21.5Z" fill="black"/>
-            </svg>`
         }
 
-        featureContainer.appendChild(arrowContainer)
-        featureContainer.appendChild(featureName)
-        featureContainer.addEventListener("click", () => { this.updateCurrentlyEditing(feature.toLowerCase()) })
+        this.selectedSVGs = {
+            base: 0,
+            hair: 0,
+            eyes: 0,
+            nose: 0,
+            mouth: 0,
+            facialHair: 0,
+            clothes: 0,
+            accessories: 0,
+            glasses: 0
+        }
 
-        featureName.innerText = feature
-        legendContainer.appendChild(featureContainer)
-    })
 
-    // Set up avatar viewer
-    const leftArrowContainer = document.createElement("div")
-    leftArrowContainer.id = "left-arrow"
-    leftArrowContainer.innerHTML = `<svg width="29" height="29" viewBox="0 0 49 54" fill="none" xmlns="http://www.w3.org/2000/svg">
+    }
+
+    AvatarMaker.prototype = {
+        createGenerator: makeNewGenerator,
+    }
+
+    /**
+     * Creates new Avatar Maker Window
+     * @param {*} containerSelector selector for the container in which the AvatarMaker window will reside in
+     */
+    function makeNewGenerator(containerSelector) {
+
+        // link css
+        var linkTag = document.createElement("link");
+        linkTag.setAttribute("rel", "stylesheet");
+        linkTag.setAttribute("type", "text/css");
+        linkTag.setAttribute("href", "AvatarMaker.css");
+        document.getElementsByTagName("head")[0].appendChild(linkTag);
+
+        // Outer window
+        const generatorWindow = document.createElement("div")
+        generatorWindow.id = "avatar-maker-" + this.id
+        generatorWindow.className = "avatar-maker"
+
+        // Title div
+        const title = document.createElement("div")
+        title.className = "maker-title"
+        title.innerText = "Create Your Avatar"
+
+        // Contents div
+        const contents = document.createElement("div")
+        contents.className = "contents"
+
+        const legendContainer = document.createElement("div")
+        legendContainer.className = "legend"
+        const viewAvatar = document.createElement("div")
+        viewAvatar.className = "view-avatar"
+        const colourSelector = document.createElement("div")
+        colourSelector.className = "colour-selector"
+
+        // Save button div
+        const saveDiv = document.createElement("div")
+        const saveButton = document.createElement("button")
+        saveDiv.id = "save-button-div"
+        saveButton.innerText = "Save"
+        saveDiv.append(saveButton)
+
+        generatorWindow.append(title)
+        generatorWindow.append(contents)
+        generatorWindow.append(saveDiv)
+
+        contents.append(legendContainer)
+        contents.append(viewAvatar)
+        contents.append(colourSelector)
+
+        // Set up legend 
+        this.features.map((feature, i) => {
+            const featureContainer = document.createElement("div")
+            featureContainer.className = "legend-feature"
+            featureContainer.id = feature.toLowerCase()
+            const arrowContainer = document.createElement("div")
+            arrowContainer.className = "arrow-container"
+            const featureName = document.createElement("div")
+            featureName.className = "feature-name"
+
+
+            if (i == this.currentlyEditing) {
+                featureName.classList.add("currently-selected")
+                arrowContainer.innerHTML = `<svg width="20" height="20" viewBox="0 0 44 38" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M42.7678 20.7678C43.7441 19.7915 43.7441 18.2085 42.7678 17.2322L26.8579 1.32233C25.8816 0.34602 24.2986 0.34602 23.3223 1.32233C22.346 2.29864 22.346 3.88155 23.3223 4.85786L37.4645 19L23.3223 33.1421C22.346 34.1184 22.346 35.7014 23.3223 36.6777C24.2986 37.654 25.8816 37.654 26.8579 36.6777L42.7678 20.7678ZM0 21.5H41V16.5H0V21.5Z" fill="black"/>
+            </svg>`
+            }
+
+            featureContainer.appendChild(arrowContainer)
+            featureContainer.appendChild(featureName)
+            featureContainer.addEventListener("click", () => { this.updateCurrentlyEditing(feature.toLowerCase()) })
+
+            featureName.innerText = feature
+            legendContainer.appendChild(featureContainer)
+        })
+
+        // Set up avatar viewer
+        const leftArrowContainer = document.createElement("div")
+        leftArrowContainer.id = "left-arrow"
+        leftArrowContainer.innerHTML = `<svg width="29" height="29" viewBox="0 0 49 54" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path d="M46.4694 50L6.5714 26.5306M46.4694 4L6.5714 27.4694" stroke="black" stroke-width="7"/>
     <path d="M-3.01893e-05 27L11.9694 20.496L11.9694 33.504L-3.01893e-05 27Z" fill="black"/>
     </svg>`
-    leftArrowContainer.addEventListener("click", () => { this.leftArrowClicked() })
+        leftArrowContainer.addEventListener("click", () => { this.leftArrowClicked() })
 
+        const currentAvatar = document.createElement("div")
+        currentAvatar.id = "my-avatar"
+        const base = document.createElement("div")
+        base.innerHTML = this.featureSVGs.base[0]
+        base.id = "base-svg"
+        currentAvatar.appendChild(base)
 
-    const currentAvatar = document.createElement("div")
-    currentAvatar.id = "my-avatar"
-    const base = document.createElement("div")
-    base.innerHTML = this.featureSVGs.base[0]
-    base.id = "base-svg"
-    currentAvatar.appendChild(base)
+        const hair = document.createElement("div")
+        hair.innerHTML = this.featureSVGs.hair[0]
+        hair.id = "hair-svg"
+        currentAvatar.appendChild(hair)
 
-    const hair = document.createElement("div")
-    hair.innerHTML = this.featureSVGs.hair[0]
-    hair.id = "hair-svg"
-    currentAvatar.appendChild(hair)
+        const eyes = document.createElement("div")
+        eyes.innerHTML = this.featureSVGs.eyes[0]
+        eyes.id = "eyes-svg"
+        currentAvatar.appendChild(eyes)
 
-    const eyes = document.createElement("div")
-    eyes.innerHTML = this.featureSVGs.eyes[0]
-    eyes.id = "eyes-svg"
-    currentAvatar.appendChild(eyes)
+        const nose = document.createElement("div")
+        nose.innerHTML = this.featureSVGs.nose[0]
+        nose.id = "nose-svg"
+        currentAvatar.appendChild(nose)
 
-    const nose = document.createElement("div")
-    nose.innerHTML = this.featureSVGs.nose[0]
-    nose.id = "nose-svg"
-    currentAvatar.appendChild(nose)
+        const mouth = document.createElement("div")
+        mouth.innerHTML = this.featureSVGs.mouth[0]
+        mouth.id = "mouth-svg"
+        currentAvatar.appendChild(mouth)
 
-    const mouth = document.createElement("div")
-    mouth.innerHTML = this.featureSVGs.mouth[0]
-    mouth.id = "mouth-svg"
-    currentAvatar.appendChild(mouth)
+        const clothes = document.createElement("div")
+        clothes.innerHTML = this.featureSVGs.clothes[0]
+        clothes.id = "clothes-svg"
+        currentAvatar.appendChild(clothes)
 
-    const facialHair = document.createElement("div")
-    facialHair.innerHTML = this.featureSVGs.facialHair[0]
-    facialHair.id = "facialHair-svg"
-    currentAvatar.appendChild(facialHair)
+        const facialHair = document.createElement("div")
+        facialHair.innerHTML = this.featureSVGs.facialHair[0]
+        facialHair.id = "facialHair-svg"
+        currentAvatar.appendChild(facialHair)
 
-    const clothes = document.createElement("div")
-    clothes.innerHTML = this.featureSVGs.clothes[0]
-    clothes.id = "clothes-svg"
-    currentAvatar.appendChild(clothes)
+        const accessories = document.createElement("div")
+        accessories.innerHTML = this.featureSVGs.accessories[0]
+        accessories.id = "accessories-svg"
+        currentAvatar.appendChild(accessories)
 
-    const accessories = document.createElement("div")
-    accessories.innerHTML = this.featureSVGs.accessories[0]
-    accessories.id = "accessories-svg"
-    currentAvatar.appendChild(accessories)
+        const glasses = document.createElement("div")
+        glasses.innerHTML = this.featureSVGs.glasses[0]
+        glasses.id = "glasses-svg"
+        currentAvatar.appendChild(glasses)
 
-    const glasses = document.createElement("div")
-    glasses.innerHTML = this.featureSVGs.glasses[0]
-    glasses.id = "glasses-svg"
-    currentAvatar.appendChild(glasses)
-
-    const rightArrowContainer = document.createElement("div")
-    rightArrowContainer.id = "right-arrow"
-    rightArrowContainer.innerHTML = `<svg width="29" height="29" viewBox="0 0 49 54" fill="none" xmlns="http://www.w3.org/2000/svg">
+        const rightArrowContainer = document.createElement("div")
+        rightArrowContainer.id = "right-arrow"
+        rightArrowContainer.innerHTML = `<svg width="29" height="29" viewBox="0 0 49 54" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path d="M2.26538 50L42.1633 26.5306M2.26538 4L42.1633 27.4694" stroke="black" stroke-width="7"/>
     <path d="M48.7348 27L36.7654 20.496L36.7654 33.504L48.7348 27Z" fill="black"/>
     </svg>`
-    rightArrowContainer.addEventListener("click", () => { this.rightArrowClicked() })
+        rightArrowContainer.addEventListener("click", () => { this.rightArrowClicked() })
 
 
-    viewAvatar.appendChild(leftArrowContainer)
-    viewAvatar.appendChild(currentAvatar)
-    viewAvatar.appendChild(rightArrowContainer)
+        viewAvatar.appendChild(leftArrowContainer)
+        viewAvatar.appendChild(currentAvatar)
+        viewAvatar.appendChild(rightArrowContainer)
 
-    colourSelector.innerText = "hi"
+        // Set up color selector 
+        const colourViewer = document.createElement("div")
+        colourSelector.appendChild(colourViewer)
+        colourViewer.className = "colour-view-circle"
+        const colourCodeInput = document.createElement("input")
+        colourCodeInput.setAttribute("type", "text")
+        colourCodeInput.setAttribute("id", "colour-input")
+        colourCodeInput.setAttribute("placeholder", "Colour HEX Code")
+        colourSelector.appendChild(colourCodeInput)
 
 
-    const container = document.querySelector(containerSelector)
-    container.append(generatorWindow)
-}
+        const container = document.querySelector(containerSelector)
+        container.append(generatorWindow)
+    }
 
-AvatarMaker.prototype.updateCurrentlyEditing = function (feature) {
+    AvatarMaker.prototype.updateCurrentlyEditing = function (feature) {
 
-    const lowercaseFeatures = this.features.map(feature => feature.toLowerCase());
-    const allLegendItems = document.querySelector(".legend")
+        const lowercaseFeatures = this.features.map(feature => feature.toLowerCase());
+        const allLegendItems = document.querySelector(`#avatar-maker-${this.id} .legend`)
 
-    // Remove underline on old item 
-    const oldEditingItem = document.querySelector(`#${lowercaseFeatures[this.currentlyEditing]}`)
-    const featureNameElement = document.querySelector(".feature-name.currently-selected")
-    featureNameElement.classList.remove("currently-selected")
-    allLegendItems.childNodes[this.currentlyEditing].getElementsByClassName("arrow-container")[0].innerHTML = ""
-    // console.log(allLegendItems.childNodes[this.currentlyEditing])
+        // Remove underline on old item 
+        const featureNameElement = document.querySelector(`#avatar-maker-${this.id} .feature-name.currently-selected`)
+        featureNameElement.classList.remove("currently-selected")
+        allLegendItems.childNodes[this.currentlyEditing].getElementsByClassName("arrow-container")[0].innerHTML = ""
+        // console.log(allLegendItems.childNodes[this.currentlyEditing])
 
-    this.currentlyEditing = lowercaseFeatures.indexOf(feature)
+        this.currentlyEditing = lowercaseFeatures.indexOf(feature)
 
-    // Change underline
-    allLegendItems.childNodes[this.currentlyEditing].getElementsByClassName("feature-name")[0].classList.add("currently-selected")
-    allLegendItems.childNodes[this.currentlyEditing].getElementsByClassName("arrow-container")[0].innerHTML = `<svg width="20" height="20" viewBox="0 0 44 38" fill="none" xmlns="http://www.w3.org/2000/svg">
+        // Change underline
+        allLegendItems.childNodes[this.currentlyEditing].getElementsByClassName("feature-name")[0].classList.add("currently-selected")
+        allLegendItems.childNodes[this.currentlyEditing].getElementsByClassName("arrow-container")[0].innerHTML = `<svg width="20" height="20" viewBox="0 0 44 38" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path d="M42.7678 20.7678C43.7441 19.7915 43.7441 18.2085 42.7678 17.2322L26.8579 1.32233C25.8816 0.34602 24.2986 0.34602 23.3223 1.32233C22.346 2.29864 22.346 3.88155 23.3223 4.85786L37.4645 19L23.3223 33.1421C22.346 34.1184 22.346 35.7014 23.3223 36.6777C24.2986 37.654 25.8816 37.654 26.8579 36.6777L42.7678 20.7678ZM0 21.5H41V16.5H0V21.5Z" fill="black"/>
     </svg>`
-}
+    }
 
-AvatarMaker.prototype.rightArrowClicked = function () {
-    console.log("clicked right")
+    AvatarMaker.prototype.rightArrowClicked = function () {
+        const featureBeingEditedName = Object.keys(this.selectedSVGs)[this.currentlyEditing]
 
-    const featureBeingEditedName = Object.keys(this.selectedSVGs)[this.currentlyEditing]
+        let featureContainer = document.querySelector(`#avatar-maker-${this.id} #${featureBeingEditedName}-svg`)
 
-    let featureContainer = document.querySelector(`#${featureBeingEditedName}-svg`)
-    console.log(featureContainer)
+        featureContainer.innerHTML = ""
 
-    featureContainer.innerHTML = ""
+        // loop through the svgs of the currently editing element
+        const lengthOfCurrent = Object.values(this.featureSVGs)[this.currentlyEditing].length
 
-    // loop through the svgs of the currently editing element
-    const lengthOfCurrent = Object.values(this.featureSVGs)[this.currentlyEditing].length
+        // SVG currently showing
+        let currentlySelectedSVG = Object.values(this.selectedSVGs)[this.currentlyEditing]
 
-    // SVG currently showing
-    let currentlySelectedSVG = Object.values(this.selectedSVGs)[this.currentlyEditing]
+        if (currentlySelectedSVG + 1 > (lengthOfCurrent - 1)) {
+            currentlySelectedSVG = 0
+        } else
+            currentlySelectedSVG += 1
 
-    if (currentlySelectedSVG + 1 > (lengthOfCurrent - 1)) {
-        currentlySelectedSVG = 0
-    } else
-        currentlySelectedSVG += 1
+        this.selectedSVGs[featureBeingEditedName] = currentlySelectedSVG
 
-    this.selectedSVGs[featureBeingEditedName] = currentlySelectedSVG
+        featureContainer.innerHTML = Object.values(this.featureSVGs)[this.currentlyEditing][currentlySelectedSVG]
+    }
 
-    featureContainer.innerHTML = Object.values(this.featureSVGs)[this.currentlyEditing][currentlySelectedSVG]
-}
+    AvatarMaker.prototype.leftArrowClicked = function () {
+        const featureBeingEditedName = Object.keys(this.selectedSVGs)[this.currentlyEditing]
 
-AvatarMaker.prototype.leftArrowClicked = function () {
-    console.log("clicked left")
+        let featureContainer = document.querySelector(`#avatar-maker-${this.id} #${featureBeingEditedName}-svg`)
 
-    const featureBeingEditedName = Object.keys(this.selectedSVGs)[this.currentlyEditing]
+        featureContainer.innerHTML = ""
 
-    let featureContainer = document.querySelector(`#${featureBeingEditedName}-svg`)
+        // loop through the svgs of the currently editing element
+        const lengthOfCurrent = Object.values(this.featureSVGs)[this.currentlyEditing].length
 
-    featureContainer.innerHTML = ""
+        // SVG currently showing
+        let currentlySelectedSVG = Object.values(this.selectedSVGs)[this.currentlyEditing]
 
-    // loop through the svgs of the currently editing element
-    const lengthOfCurrent = Object.values(this.featureSVGs)[this.currentlyEditing].length
+        if (currentlySelectedSVG - 1 < 0) {
+            currentlySelectedSVG = lengthOfCurrent - 1
+        } else
+            currentlySelectedSVG -= 1
 
-    // SVG currently showing
-    let currentlySelectedSVG = Object.values(this.selectedSVGs)[this.currentlyEditing]
+        this.selectedSVGs[featureBeingEditedName] = currentlySelectedSVG
 
-    if (currentlySelectedSVG - 1 < 0) {
-        currentlySelectedSVG = lengthOfCurrent - 1
-    } else
-        currentlySelectedSVG -= 1
-
-    this.selectedSVGs[featureBeingEditedName] = currentlySelectedSVG
-
-    featureContainer.innerHTML = Object.values(this.featureSVGs)[this.currentlyEditing][currentlySelectedSVG]
-}
+        featureContainer.innerHTML = Object.values(this.featureSVGs)[this.currentlyEditing][currentlySelectedSVG]
+    }
 
 
-// Generates a unique id for every instance of the Avatar Maker
-function generateRandomId() {
-    const dateNum = Date.now()
-    const randomNum = Math.floor(Math.random() * 100)
+    // Generates a unique id for every instance of the Avatar Maker
+    function generateRandomId() {
+        const dateNum = Date.now()
+        const randomNum = Math.floor(Math.random() * 100)
 
-    const uniqueID = dateNum + randomNum
+        const uniqueID = dateNum + randomNum
 
-    return uniqueID
-}
+        return uniqueID
+    }
 
+    global.AvatarMaker = global.AvatarMaker || AvatarMaker
 
+})(window, window.document, $);
 

@@ -19,8 +19,8 @@
 .contents {
     display: flex;
     flex-direction: row;
-    justify-content: center;
-    margin-top: 2rem;
+    justify-content: space-evenly;
+    margin: 2rem 0rem;
 }
 
 #save-button-div {
@@ -47,7 +47,7 @@
 }
 
 .legend{
-    border: 5px solid #7C4E41;
+    border: 5px solid black;
     box-shadow: 4px 7px 4px rgba(0, 0, 0, 0.25);
     border-radius: 15px;
     padding: 1rem;
@@ -76,7 +76,6 @@
     display: flex;
     flex-direction: row;
     justify-content: center;
-    flex: 2;
 }
 
 #left-arrow, #right-arrow {
@@ -103,14 +102,24 @@
 
 .colour-selector {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
+    border: 5px solid black;
+    box-shadow: 4px 7px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 15px;
+    padding: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.colour-selector-title {
+    text-decoration: underline;
+    text-align: center;
+    font-size: 1.3rem;
 }
 
 .colour-view-circle{
-    height: 25px;
-    width: 25px;
+    height: 15px;
+    width: 15px;
     border-radius: 50%;
-    background-color: white;
     border: 3px solid black;
 }
 
@@ -118,5 +127,16 @@
     height: 25px;
     border: 3px solid black;
     border-radius: 10px;
-    margin-left: 1rem;
+    margin-left: 0.5rem;
+}
+
+.colour-selector-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin: 5px 0px;
+}
+
+.colour-selector-subtitle{
+    text-align: center;
 }

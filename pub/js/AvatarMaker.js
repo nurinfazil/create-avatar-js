@@ -563,4 +563,3 @@
     global.AvatarMaker = global.AvatarMaker || AvatarMaker
 
 })(window, window.document, $);
-

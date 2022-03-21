@@ -404,7 +404,7 @@
 
         const colourSelectorTitle = document.createElement("div")
         colourSelectorTitle.className = "colour-selector-title"
-        colourSelectorTitle.innerText = "Colour Codes"
+        colourSelectorTitle.innerText = "Colour Selector"
         colourSelector.appendChild(colourSelectorTitle)
 
         const colourSelectorSubtitle = document.createElement("div")

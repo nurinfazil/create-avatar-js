@@ -458,7 +458,7 @@
             featureColour.appendChild(featureColourViewer)
             featureColour.appendChild(featureColourCodeInput)
 
-            featureColourCodeInput.addEventListener('change', (e) => this.updateFeatureColor(e, feature));
+            featureColourCodeInput.addEventListener('change', (e) => this.updateFeatureColor(e.target.value, feature));
         })
 
         const container = document.querySelector(containerSelector)
@@ -513,7 +513,6 @@
         // console.log(allLegendItems.childNodes[this.currentlyEditing])
 
         this.currentlyEditing = this.featuresToShow.indexOf(feature)
-        console.log(this.currentlyEditing)
 
         // Change underline
         allLegendItems.childNodes[this.currentlyEditing].getElementsByClassName("feature-name")[0].classList.add("currently-selected")
@@ -602,20 +601,42 @@
     }
 
     // Updates colour of feature
-    AvatarMaker.prototype.updateFeatureColor = function (e, feature) {
+    AvatarMaker.prototype.updateFeatureColor = function (colour, feature) {
 
-        this.featureColours[feature] = e.target.value
+        this.featureColours[feature] = colour
 
         let featurePath = document.querySelector(`#avatar-maker-${this.id} #${feature}-svg svg path`)
         let colourViewCircle = document.querySelector(`#avatar-maker-${this.id} .colour-view-circle.${feature}-colour`)
-        colourViewCircle.style.backgroundColor = e.target.value
+        colourViewCircle.style.backgroundColor = colour
         if (featurePath == null) return
-        featurePath.setAttribute("fill", e.target.value)
+        featurePath.setAttribute("fill", colour)
     }
 
     // Resets the avatar
     AvatarMaker.prototype.resetAvatar = function () {
-        console.log("hello")
+        this.featuresToShow.map((feature) => {
+            const featureElement = document.querySelector(`#avatar-maker-${this.id} #${feature}-svg`)
+            featureElement.innerHTML = ""
+            featureElement.innerHTML = this.featureSVGs[feature][0]
+            this.selectedSVGs[feature] = 0
+        })
+
+        this.featureColours[hair] = "#04104d"
+        this.featureColours[facialHair] = "#04104d"
+        this.featureColours[clothes] = "#80c43b"
+
+        document.querySelector(`#avatar-maker-${this.id} .colour-view-circle.hair-colour`).style.backgroundColor = "#04104d"
+        document.querySelector(`#avatar-maker-${this.id} .colour-view-circle.facialHair-colour`).style.backgroundColor = "#04104d"
+        document.querySelector(`#avatar-maker-${this.id} .colour-view-circle.clothes-colour`).style.backgroundColor = "#80c43b"
+
+        const inputs = document.querySelectorAll(`#avatar-maker-${this.id} #colour-input`)
+        inputs.forEach((element) => {
+            element.value = ""
+        })
+
+        this.updateFeatureColor("#04104d", "hair")
+        this.updateFeatureColor("#04104d", "facialHair")
+        this.updateFeatureColor("#80c43b", "clothes")
     }
 
 

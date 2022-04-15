@@ -254,10 +254,22 @@
             accessories: 0,
             glasses: 0
         }
+        this.featuresToShow = [
+            "base",
+            "hair",
+            "eyes",
+            "nose",
+            "mouth",
+            "facialHair",
+            "clothes",
+            "accessories",
+            "glasses"
+        ]
     }
 
     AvatarMaker.prototype = {
         createGenerator: makeNewGenerator,
+        hide: hideFeature
     }
 
     // Instantiates new avatar maker window
@@ -292,15 +304,20 @@
         colourSelector.className = "colour-selector"
 
         // Save button - will be implemented later
-        // const saveDiv = document.createElement("div")
-        // const saveButton = document.createElement("button")
-        // saveDiv.id = "save-button-div"
-        // saveButton.innerText = "Save"
-        // saveDiv.append(saveButton)
+        const buttonsDiv = document.createElement("div")
+        const saveButton = document.createElement("button")
+        const resetButton = document.createElement("button")
+        resetButton.id = "reset-button"
+        buttonsDiv.id = "buttons-div"
+        saveButton.innerText = "Save"
+        resetButton.innerText = "Reset"
+        buttonsDiv.append(resetButton)
+        resetButton.addEventListener("click", () => { this.resetAvatar() })
+        buttonsDiv.append(saveButton)
 
         generatorWindow.append(title)
         generatorWindow.append(contents)
-        // generatorWindow.append(saveDiv)
+        generatorWindow.append(buttonsDiv)
 
         contents.append(legendContainer)
         contents.append(viewAvatar)
@@ -310,7 +327,11 @@
         this.features.map((feature, i) => {
             const featureContainer = document.createElement("div")
             featureContainer.className = "legend-feature"
-            featureContainer.id = feature.toLowerCase()
+            if (feature == "Facial Hair") {
+                featureContainer.id = "facialHair"
+            } else {
+                featureContainer.id = feature.toLowerCase()
+            }
             const arrowContainer = document.createElement("div")
             arrowContainer.className = "arrow-container"
             const featureName = document.createElement("div")
@@ -326,7 +347,11 @@
 
             featureContainer.appendChild(arrowContainer)
             featureContainer.appendChild(featureName)
-            featureContainer.addEventListener("click", () => { this.updateCurrentlyEditing(feature.toLowerCase()) })
+            if (feature == "Facial Hair") {
+                featureContainer.addEventListener("click", () => { this.updateCurrentlyEditing("facialHair") })
+            } else {
+                featureContainer.addEventListener("click", () => { this.updateCurrentlyEditing(feature.toLowerCase()) })
+            }
 
             featureName.innerText = feature
             legendContainer.appendChild(featureContainer)
@@ -440,10 +465,45 @@
         container.append(generatorWindow)
     }
 
+    // Hide feature
+    function hideFeature(featureToRemove, showDefault = true) {
+        if (featureToRemove == this.featuresToShow[0]) {
+            const defaultToSet = document.querySelector(`#avatar-maker-${this.id} .legend-feature#${this.featuresToShow[1]} .feature-name`)
+            const arrowContainer = document.querySelector(`#avatar-maker-${this.id} .legend-feature#${this.featuresToShow[1]} .arrow-container`)
+            arrowContainer.innerHTML = `<svg width="20" height="20" viewBox="0 0 44 38" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M42.7678 20.7678C43.7441 19.7915 43.7441 18.2085 42.7678 17.2322L26.8579 1.32233C25.8816 0.34602 24.2986 0.34602 23.3223 1.32233C22.346 2.29864 22.346 3.88155 23.3223 4.85786L37.4645 19L23.3223 33.1421C22.346 34.1184 22.346 35.7014 23.3223 36.6777C24.2986 37.654 25.8816 37.654 26.8579 36.6777L42.7678 20.7678ZM0 21.5H41V16.5H0V21.5Z" fill="black"/>
+            </svg>`
+            defaultToSet.classList.add("currently-selected")
+        }
+
+        // Remove from avatar
+        if (!showDefault) {
+            const featureSVG = document.querySelector(`#avatar-maker-${this.id} #my-avatar #${featureToRemove}-svg`)
+            featureSVG.remove()
+        }
+
+        // Remove from featuresToShow
+        this.featuresToShow = this.featuresToShow.filter(feature => feature != featureToRemove)
+
+        // Remove from legend
+        const featureDiv = document.querySelector(`#avatar-maker-${this.id} .legend-feature#${featureToRemove}`)
+        featureDiv.remove()
+
+        // Remove from colour selector 
+        if ((featureToRemove == "facialHair") || (featureToRemove == "hair") || (featureToRemove == "clothes")) {
+            const colourSelector = document.querySelector(`#avatar-maker-${this.id} .colour-selector-container`)
+            colourSelector.remove()
+        }
+
+        // Check if should show colour selector 
+        if ((!this.featuresToShow.includes("hair") && !this.featuresToShow.includes("facialHair") && !this.featuresToShow.includes("clothes"))) {
+            const colourSelectorContainer = document.querySelector(`#avatar-maker-${this.id} .colour-selector`)
+            colourSelectorContainer.remove()
+        }
+    }
+
     // Updates legend when user selects different feature to edit
     AvatarMaker.prototype.updateCurrentlyEditing = function (feature) {
-
-        const lowercaseFeatures = this.features.map(feature => feature.toLowerCase());
         const allLegendItems = document.querySelector(`#avatar-maker-${this.id} .legend`)
 
         // Remove underline on old item 
@@ -452,7 +512,8 @@
         allLegendItems.childNodes[this.currentlyEditing].getElementsByClassName("arrow-container")[0].innerHTML = ""
         // console.log(allLegendItems.childNodes[this.currentlyEditing])
 
-        this.currentlyEditing = lowercaseFeatures.indexOf(feature)
+        this.currentlyEditing = this.featuresToShow.indexOf(feature)
+        console.log(this.currentlyEditing)
 
         // Change underline
         allLegendItems.childNodes[this.currentlyEditing].getElementsByClassName("feature-name")[0].classList.add("currently-selected")
@@ -463,17 +524,19 @@
 
     // Updates avatar when right arrow is clicked
     AvatarMaker.prototype.rightArrowClicked = function () {
-        const featureBeingEditedName = Object.keys(this.selectedSVGs)[this.currentlyEditing]
+        const featureBeingEditedName = this.featuresToShow[this.currentlyEditing]
+        const indexOfCurrent = Object.keys(this.selectedSVGs).indexOf(featureBeingEditedName)
 
         let featureContainer = document.querySelector(`#avatar-maker-${this.id} #${featureBeingEditedName}-svg`)
 
         featureContainer.innerHTML = ""
 
         // loop through the svgs of the currently editing element
-        const lengthOfCurrent = Object.values(this.featureSVGs)[this.currentlyEditing].length
+
+        const lengthOfCurrent = Object.values(this.featureSVGs)[indexOfCurrent].length
 
         // SVG currently showing
-        let currentlySelectedSVG = Object.values(this.selectedSVGs)[this.currentlyEditing]
+        let currentlySelectedSVG = Object.values(this.selectedSVGs)[indexOfCurrent]
 
         if (currentlySelectedSVG + 1 > (lengthOfCurrent - 1)) {
             currentlySelectedSVG = 0
@@ -482,17 +545,17 @@
 
         this.selectedSVGs[featureBeingEditedName] = currentlySelectedSVG
 
-        featureContainer.innerHTML = Object.values(this.featureSVGs)[this.currentlyEditing][currentlySelectedSVG]
+        featureContainer.innerHTML = Object.values(this.featureSVGs)[indexOfCurrent][currentlySelectedSVG]
 
-        if (this.currentlyEditing == 1) {
+        if (indexOfCurrent == 1) {
             const hairPath = document.querySelector(`#avatar-maker-${this.id} #hair-svg svg path`)
             if (hairPath == null) return
             hairPath.setAttribute("fill", this.featureColours.hair)
-        } else if (this.currentlyEditing == 5) {
+        } else if (indexOfCurrent == 5) {
             const facialHairPath = document.querySelector(`#avatar-maker-${this.id} #facialHair-svg svg path`)
             if (facialHairPath == null) return
             facialHairPath.setAttribute("fill", this.featureColours.facialHair)
-        } else if (this.currentlyEditing == 6) {
+        } else if (indexOfCurrent == 6) {
             const clothesPath = document.querySelector(`#avatar-maker-${this.id} #clothes-svg svg path`)
             if (clothesPath == null) return
             clothesPath.setAttribute("fill", this.featureColours.clothes)
@@ -501,17 +564,18 @@
 
     // Updates avatar when left arrow is clicked
     AvatarMaker.prototype.leftArrowClicked = function () {
-        const featureBeingEditedName = Object.keys(this.selectedSVGs)[this.currentlyEditing]
+        const featureBeingEditedName = this.featuresToShow[this.currentlyEditing]
+        const indexOfCurrent = Object.keys(this.selectedSVGs).indexOf(featureBeingEditedName)
 
         let featureContainer = document.querySelector(`#avatar-maker-${this.id} #${featureBeingEditedName}-svg`)
 
         featureContainer.innerHTML = ""
 
         // loop through the svgs of the currently editing element
-        const lengthOfCurrent = Object.values(this.featureSVGs)[this.currentlyEditing].length
+        const lengthOfCurrent = Object.values(this.featureSVGs)[indexOfCurrent].length
 
         // SVG currently showing
-        let currentlySelectedSVG = Object.values(this.selectedSVGs)[this.currentlyEditing]
+        let currentlySelectedSVG = Object.values(this.selectedSVGs)[indexOfCurrent]
 
         if (currentlySelectedSVG - 1 < 0) {
             currentlySelectedSVG = lengthOfCurrent - 1
@@ -520,17 +584,17 @@
 
         this.selectedSVGs[featureBeingEditedName] = currentlySelectedSVG
 
-        featureContainer.innerHTML = Object.values(this.featureSVGs)[this.currentlyEditing][currentlySelectedSVG]
+        featureContainer.innerHTML = Object.values(this.featureSVGs)[indexOfCurrent][currentlySelectedSVG]
 
-        if (this.currentlyEditing == 1) {
+        if (indexOfCurrent == 1) {
             const hairPath = document.querySelector(`#avatar-maker-${this.id} #hair-svg svg path`)
             if (hairPath == null) return
             hairPath.setAttribute("fill", this.featureColours.hair)
-        } else if (this.currentlyEditing == 5) {
+        } else if (indexOfCurrent == 5) {
             const facialHairPath = document.querySelector(`#avatar-maker-${this.id} #facialHair-svg svg path`)
             if (facialHairPath == null) return
             facialHairPath.setAttribute("fill", this.featureColours.facialHair)
-        } else if (this.currentlyEditing == 6) {
+        } else if (indexOfCurrent == 6) {
             const clothesPath = document.querySelector(`#avatar-maker-${this.id} #clothes-svg svg path`)
             if (clothesPath == null) return
             clothesPath.setAttribute("fill", this.featureColours.clothes)
@@ -547,6 +611,11 @@
         colourViewCircle.style.backgroundColor = e.target.value
         if (featurePath == null) return
         featurePath.setAttribute("fill", e.target.value)
+    }
+
+    // Resets the avatar
+    AvatarMaker.prototype.resetAvatar = function () {
+        console.log("hello")
     }
 
 

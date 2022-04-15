@@ -445,7 +445,8 @@
             featureColourViewer.style.backgroundColor = this.featureColours[feature]
             const featureColourCodeInput = document.createElement("input")
             featureColourCodeInput.setAttribute("type", "text")
-            featureColourCodeInput.setAttribute("id", "colour-input")
+            featureColourCodeInput.setAttribute("class", `colour-input`)
+            featureColourCodeInput.setAttribute("id", `${feature}`)
             if (i == 0) {
                 featureColourCodeInput.setAttribute("placeholder", "Hair Colour")
             } else if (i == 1) {
@@ -614,6 +615,7 @@
 
     // Resets the avatar
     AvatarMaker.prototype.resetAvatar = function () {
+        // Reset svg
         this.featuresToShow.map((feature) => {
             const featureElement = document.querySelector(`#avatar-maker-${this.id} #${feature}-svg`)
             featureElement.innerHTML = ""
@@ -621,22 +623,25 @@
             this.selectedSVGs[feature] = 0
         })
 
+        // Reset feature colours object
         this.featureColours[hair] = "#04104d"
         this.featureColours[facialHair] = "#04104d"
         this.featureColours[clothes] = "#80c43b"
 
-        document.querySelector(`#avatar-maker-${this.id} .colour-view-circle.hair-colour`).style.backgroundColor = "#04104d"
-        document.querySelector(`#avatar-maker-${this.id} .colour-view-circle.facialHair-colour`).style.backgroundColor = "#04104d"
-        document.querySelector(`#avatar-maker-${this.id} .colour-view-circle.clothes-colour`).style.backgroundColor = "#80c43b"
-
-        const inputs = document.querySelectorAll(`#avatar-maker-${this.id} #colour-input`)
-        inputs.forEach((element) => {
-            element.value = ""
+        // Reset colour selector
+        Object.keys(this.featureColours).map((feature) => {
+            if (this.featuresToShow.includes(feature)) {
+                if (feature == "clothes") {
+                    document.querySelector(`#avatar-maker-${this.id} .colour-view-circle.${feature}-colour`).style.backgroundColor = "#80c43b"
+                    this.updateFeatureColor("#80c43b", feature)
+                } else {
+                    document.querySelector(`#avatar-maker-${this.id} .colour-view-circle.${feature}-colour`).style.backgroundColor = "#04104d"
+                    this.updateFeatureColor("#04104d", feature)
+                }
+                const colourInput = document.querySelector(`#avatar-maker-${this.id} .colour-input#${feature}`)
+                colourInput.value = ""
+            }
         })
-
-        this.updateFeatureColor("#04104d", "hair")
-        this.updateFeatureColor("#04104d", "facialHair")
-        this.updateFeatureColor("#80c43b", "clothes")
     }
 
 

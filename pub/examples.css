@@ -1,13 +1,26 @@
-#saved-avatars-heading {
+h3 {
     font-family: 'Nunito', sans-serif;
 }
 
-#get-avatars-btn {
+button {
     font-family: 'Nunito', sans-serif;
     background-color: white;
     border: 2px solid black;
     border-radius: 5px;
     font-size: 1rem;
     cursor: pointer;
+    margin: 0rem 0rem 3rem 0rem;
+}
+
+button:hover {
+    font-weight: bold;
+}
+
+#avatar-id-input {
+    font-family: 'Nunito', sans-serif;
+    background-color: white;
+    border: 2px solid black;
+    border-radius: 5px;
+    font-size: 1rem;
     margin: 0rem 0rem 3rem 0rem;
 }

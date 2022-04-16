@@ -267,12 +267,17 @@
         ]
 
         this.savedAvatars = []
+
     }
 
     AvatarMaker.prototype = {
         createGenerator: makeNewGenerator,
         hide: hideFeature,
-        getAvatars: getSavedAvatars
+        displayAllAvatars: displaySavedAvatars,
+        getAvatars: getSavedAvatars,
+        displayAvatar: displayAvatarById,
+        getAvatar: getAvatarById,
+        onSave: onAvatarSave
     }
 
     // Instantiates new avatar maker window
@@ -508,8 +513,76 @@
         }
     }
 
+    function displaySavedAvatars(domElement) {
+        const displayAvatarsElement = document.querySelector(domElement)
+        displayAvatarsElement.style.display = "flex"
+        displayAvatarsElement.style.flexDirection = "row"
+        displayAvatarsElement.style.flexWrap = "wrap"
+        displayAvatarsElement.innerHTML = ""
+        this.savedAvatars.map((avatar) => {
+            const avatarContainer = document.createElement("div")
+            avatarContainer.id = "display-avatar"
+            avatarContainer.style.display = "flex"
+            avatarContainer.style.alignItems = "center"
+            avatarContainer.style.justifyContent = "center"
+            avatar.svgs.map((featureSVG, i) => {
+                const svgContainer = document.createElement("div")
+                if (i != 0) {
+                    svgContainer.style.position = "absolute"
+                }
+                svgContainer.innerHTML = featureSVG
+                avatarContainer.append(svgContainer)
+                displayAvatarsElement.append(avatarContainer)
+            })
+        })
+    }
+
+    // Returns all the saved avatars object
     function getSavedAvatars() {
         return this.savedAvatars
+    }
+
+    function displayAvatarById(avatarID, domElement) {
+        const displayAvatarsElement = document.querySelector(domElement)
+        displayAvatarsElement.style.display = "flex"
+        displayAvatarsElement.style.flexDirection = "row"
+        displayAvatarsElement.style.flexWrap = "wrap"
+        displayAvatarsElement.innerHTML = ""
+        this.savedAvatars.map((avatar) => {
+            if (avatar.id == avatarID) {
+                const avatarContainer = document.createElement("div")
+                avatarContainer.id = "display-avatar"
+                avatarContainer.style.display = "flex"
+                avatarContainer.style.alignItems = "center"
+                avatarContainer.style.justifyContent = "center"
+                avatar.svgs.map((featureSVG, i) => {
+                    const svgContainer = document.createElement("div")
+                    if (i != 0) {
+                        svgContainer.style.position = "absolute"
+                    }
+                    svgContainer.innerHTML = featureSVG
+                    avatarContainer.append(svgContainer)
+                    displayAvatarsElement.append(avatarContainer)
+                })
+            }
+        })
+    }
+
+    // Returns avatar object 
+    // {id: avatarID, svgs: [array of feature svgs]}
+    function getAvatarById(avatarID) {
+        let avatarToReturn = {}
+
+        this.savedAvatars.map((avatar) => {
+            if (avatar.id == avatarID) {
+                avatarToReturn = avatar
+            }
+        })
+        return avatarToReturn
+    }
+
+    function onAvatarSave(saveFunction) {
+        AvatarMaker.prototype.saveFunction = saveFunction
     }
 
     // Updates legend when user selects different feature to edit
@@ -673,7 +746,10 @@
         })
 
         this.savedAvatars.push(avatarObject)
-        // console.log(this.savedAvatars)
+
+        if (this.saveFunction != undefined) {
+            this.saveFunction()
+        }
     }
 
     // Generates a unique id for every instance of the Avatar Maker

@@ -47,6 +47,13 @@
     cursor: pointer;
 }
 
+#saved-confirmation {
+    width: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .legend {
     border: 5px solid black;
     box-shadow: 4px 7px 4px rgba(0, 0, 0, 0.25);

@@ -1,0 +1,81 @@
+body {
+    margin: 0px !important;
+}
+
+#nav {
+    font-family: 'Nunito', sans-serif;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 1rem;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+#logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #A57548;
+    margin-right: 1rem;
+}
+
+.nav-item {
+    font-size: 1.3rem;
+    margin-right: 1rem;
+}
+
+#logo:hover,
+.nav-item:hover {
+    transform: scale(1.01);
+}
+
+
+#hero1,
+#hero2 {
+    font-family: 'Nunito', sans-serif;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem 0rem;
+}
+
+#hero1 {
+    background-color: #B3989B;
+}
+
+#demo {
+    width: 1000px;
+    height: auto;
+    margin: 2rem 0rem;
+}
+
+#library-name {
+    font-size: 4rem;
+    font-weight: bold;
+    color: black;
+}
+
+.description {
+    font-size: 2rem;
+    text-align: center;
+    padding: 1rem 0rem;
+}
+
+#avatars-ex {
+    height: 250px;
+}
+
+#get-started {
+    text-decoration: underline;
+}
+
+#footer {
+    font-family: 'Nunito', sans-serif;
+    text-align: center;
+    background-color: #FCF5F4;
+    padding: 2rem 0rem;
+}

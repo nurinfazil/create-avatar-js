@@ -1,0 +1,13 @@
+#saved-avatars-heading {
+    font-family: 'Nunito', sans-serif;
+}
+
+#get-avatars-btn {
+    font-family: 'Nunito', sans-serif;
+    background-color: white;
+    border: 2px solid black;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    margin: 0rem 0rem 3rem 0rem;
+}

@@ -265,11 +265,14 @@
             "accessories",
             "glasses"
         ]
+
+        this.savedAvatars = []
     }
 
     AvatarMaker.prototype = {
         createGenerator: makeNewGenerator,
-        hide: hideFeature
+        hide: hideFeature,
+        getAvatars: getSavedAvatars
     }
 
     // Instantiates new avatar maker window
@@ -313,6 +316,7 @@
         resetButton.innerText = "Reset"
         buttonsDiv.append(resetButton)
         resetButton.addEventListener("click", () => { this.resetAvatar() })
+        saveButton.addEventListener("click", () => { this.saveAvatar() })
         buttonsDiv.append(saveButton)
 
         generatorWindow.append(title)
@@ -481,6 +485,7 @@
         if (!showDefault) {
             const featureSVG = document.querySelector(`#avatar-maker-${this.id} #my-avatar #${featureToRemove}-svg`)
             featureSVG.remove()
+            this.selectedSVGs[featureToRemove] = -1
         }
 
         // Remove from featuresToShow
@@ -501,6 +506,10 @@
             const colourSelectorContainer = document.querySelector(`#avatar-maker-${this.id} .colour-selector`)
             colourSelectorContainer.remove()
         }
+    }
+
+    function getSavedAvatars() {
+        return this.savedAvatars
     }
 
     // Updates legend when user selects different feature to edit
@@ -644,6 +653,28 @@
         })
     }
 
+    // Saves the avatar in the savedAvatars object
+    AvatarMaker.prototype.saveAvatar = function () {
+        const avatarID = generateRandomId()
+        const avatarObject = { id: avatarID, svgs: [] }
+        Object.keys(this.selectedSVGs).map((feature) => {
+            if (this.selectedSVGs[feature] != -1) {
+                if ((feature == "hair") || (feature == "facialHair") || (feature == "clothes")) {
+                    const svg = this.featureSVGs[feature][this.selectedSVGs[feature]]
+                    if (svg != "") {
+                        let featureSVG = document.querySelector(`#avatar-maker-${this.id} #${feature}-svg`)
+                        avatarObject.svgs.push($(featureSVG).html())
+                    }
+                } else {
+                    avatarObject.svgs.push(this.featureSVGs[feature][this.selectedSVGs[feature]])
+
+                }
+            }
+        })
+
+        this.savedAvatars.push(avatarObject)
+        // console.log(this.savedAvatars)
+    }
 
     // Generates a unique id for every instance of the Avatar Maker
     function generateRandomId() {

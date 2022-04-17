@@ -1,34 +1,21 @@
 "use strict"
 
-// const avatarCreator = new AvatarMaker();
-// avatarCreator.createGenerator(".avatar-generator")
-// avatarCreator.hide("eyes")
-// avatarCreator.hide("facialHair", true)
-// avatarCreator.hide("base")
-// avatarCreator.hide("hair", false)
-// avatarCreator.hide("clothes")
+const avatarCreator = new AvatarMaker();
+avatarCreator.createGenerator("#ex1-generator")
 
 const avatarCreator2 = new AvatarMaker();
-avatarCreator2.createGenerator(".avatar-generator")
+avatarCreator2.createGenerator("#ex2a-generator")
+avatarCreator2.hide("nose")
+avatarCreator2.hide("hair")
 
-function onAvatarSave() {
-    console.log("Avatar saved!")
-    const avatar = avatarCreator2.getAvatars()[avatarCreator2.getAvatars().length - 1]
+const avatarCreator3 = new AvatarMaker();
+avatarCreator3.createGenerator("#ex2b-generator")
+avatarCreator3.hide("hair")
+avatarCreator3.hide("facialHair")
+avatarCreator3.hide("clothes")
 
-    // Can save this object in your database for later use
-    console.log(avatar)
-}
-
-
-avatarCreator2.onSave(onAvatarSave)
-
-document.getElementById("get-avatars-btn").addEventListener("click", () => {
-    avatarCreator2.displayAllAvatars("#avatars-container");
-    const avatars = avatarCreator2.getAvatars();
-});
-
-document.getElementById("get-avatar-btn").addEventListener("click", (e) => {
-    var avatarId = document.getElementById("avatar-id-input").value;
-    avatarCreator2.displayAvatar(avatarId, "#avatar-container");
-    const avatar = avatarCreator2.getAvatar(avatarId);
-})
+const avatarCreator4 = new AvatarMaker();
+avatarCreator4.createGenerator("#ex2c-generator")
+avatarCreator4.hide("nose", false)
+avatarCreator4.hide("mouth", false)
+avatarCreator4.hide("hair", false)

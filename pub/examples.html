@@ -3,33 +3,134 @@
 
 <head>
     <meta charset="utf-8">
-    <title>CreateAvatar.js</title>
+    <title>Examples - CreateAvatar.js</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" type="text/css" href="AvatarMaker.css">
     <link
         href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;700&family=Comfortaa:wght@400;700&family=Karla&family=Nunito:ital,wght@0,200;0,300;0,400;0,500;0,600;0,800;0,900;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Poppins&display=swap"
         rel="stylesheet">
-    <link rel="stylesheet" href="examples.css">
-    <link rel="stylesheet" href="AvatarMaker.css">
+    <link rel="stylesheet" href="examples1.css">
 </head>
 
 <body>
-    <div class="avatar-generator"></div>
-    <h3>All Saved Avatars</h3>
-    <button id="get-avatars-btn">Get Avatars</button>
-    <div id="avatars-container"></div>
+    <div id="nav">
+        <div id="logo"><a href="/home.html">CreateAvatar.js</a></div>
+        <div class="nav-item"><a href="/examples.html">Examples</a></div>
+        <div class="nav-item"><a href="/documentation.html">Documentation</a></div>
+    </div>
+    <div id="examples">
+        <div id="ex-title">Examples</div>
+        <div class="example">
+            <div class="ex-section-title">1. Basic Generator</div>
+            <div class="ex-section-description">Use the <span
+                    class="code-darkblue">.createGenerator(domElementSelector)</span> method to show the Avatar
+                Maker where you would like it to appear in the DOM. The <span
+                    class="code-darkblue">domElementSelector</span> should be the class name or
+                id of the element in which the generator will appear in. In the example below, the generator is put in a
+                div
+                element with the id <span class="code-darkblue">ex1-generator</span>. If it was a class name then it
+                would be
+                <span class="code-darkblue">.createGenerator(".ex1-generator")</span>.
+            </div>
+            <div id="ex1">
+                <div id="ex1-generator"></div>
+                <div class="code-container code-white">
+                    "use strict"
+                    <br><br>
+                    const avatarCreator = new AvatarMaker();
+                    <br>
+                    avatarCreator.createGenerator("#ex1-generator");
+                </div>
+            </div>
+        </div>
 
-    <h3>Get Avatar by ID</h3>
-    <input type="text" id="avatar-id-input">
-    <button id="get-avatar-btn">Get Avatar by ID</button>
-    <div id="avatar-container"></div>
+        <div class="example">
+            <div class="ex-section-title">2. Generator with Hidden Features</div>
+            <div class="ex-section-description">
+                The <span class="code-darkblue">.hide(featureName)</span> method can be used to remove the ability to
+                edit certain features in the avatar maker.
+                In the example below, the nose and hair features cannot be edited. A default will be shown instead.
+                <span class="code-darkblue">featureName</span> is a string of the feature which is chosen to be removed.
+                The following are valid for <span class="code-darkblue">featureName</span>:
+                <ul>
+                    <li><span class="code-darkblue">"base"</span></li>
+                    <li><span class="code-darkblue">"hair"</span></li>
+                    <li><span class="code-darkblue">"eyes"</span></li>
+                    <li><span class="code-darkblue">"nose"</span></li>
+                    <li><span class="code-darkblue">"mouth"</span></li>
+                    <li><span class="code-darkblue">"facialHair"</span></li>
+                    <li><span class="code-darkblue">"clothes"</span></li>
+                    <li><span class="code-darkblue">"accessories"</span></li>
+                    <li><span class="code-darkblue">"glasses"</span></li>
+                </ul>
+            </div>
+            <div id="ex2">
+                <div id="ex2a-generator"></div>
+                <div class="code-container code-white">
+                    "use strict"
+                    <br><br>
+                    const avatarCreator = new AvatarMaker();
+                    <br>
+                    avatarCreator.createGenerator("#ex2a-generator")
+                    <br>
+                    avatarCreator.hide("nose")
+                    <br>
+                    avatarCreator.hide("hair")
+                </div>
+            </div>
+            <div class="ex-section-description">
+                If the hair, facial hair and clothes features are hidden, the Avatar Maker will automatically also hide
+                the colour selector.
+            </div>
+            <div id="ex2">
+                <div id="ex2b-generator"></div>
+                <div class="code-container code-white">
+                    "use strict"
+                    <br><br>
+                    const avatarCreator = new AvatarMaker();
+                    <br>
+                    avatarCreator.createGenerator("#ex2b-generator")
+                    <br>
+                    avatarCreator.hide("hair")
+                    <br>
+                    avatarCreator.hide("facialHair")
+                    <br>
+                    avatarCreator.hide("clothes")
+                </div>
+            </div>
+
+            <div class="ex-section-description">
+                The <span class="code-darkblue">.hide(featureName, showFeature)</span> method takes in a second
+                argument. By default it is <span class="code-darkblue">true</span>. If set to
+                <span class="code-darkblue">false</span>,
+                the feature will not be shown on the avatar.
+            </div>
+            <div id="ex2">
+                <div id="ex2c-generator"></div>
+                <div class="code-container code-white">
+                    "use strict"
+                    <br><br>
+                    const avatarCreator = new AvatarMaker();
+                    <br>
+                    avatarCreator.createGenerator("#ex2c-generator")
+                    <br>
+                    avatarCreator.hide("nose", false)
+                    <br>
+                    avatarCreator.hide("mouth", false)
+                    <br>
+                    avatarCreator.hide("hair", false)
+                </div>
+            </div>
+        </div>
+    </div>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Barlow:wght@400;700&family=Comfortaa:wght@400;700&family=Karla&family=Nunito:ital,wght@0,200;0,300;0,400;0,500;0,600;0,800;0,900;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Poppins&display=swap');
     </style>
     <script defer src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script defer type="text/javascript" src="./js/AvatarMaker.js"></script>
-    <script defer type="text/javascript" src="./js/examples.js"></script>
+    <script defer type="text/javascript" src="./js/examples1.js"></script>
 
 </body>
 

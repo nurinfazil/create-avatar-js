@@ -2,9 +2,17 @@
 
 Library for adding an Avatar Generator into your application. 
 
+## Landing Page 
+
+https://glacial-hollows-21399.herokuapp.com/home.html
+
+## Documentation
+
+https://glacial-hollows-21399.herokuapp.com/documentation.html
+
 ## Getting Started
 
-1. Download the stylesheet and JavaScript for the library from [here](INCLUDE)
+1. Download the stylesheet and JavaScript for the library from [here](https://github.com/csc309-winter-2022/js-library-fazilnur/blob/main/pub/AvatarMaker.zip)
 
 2. Include JQuery
 

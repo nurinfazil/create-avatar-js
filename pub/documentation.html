@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>CreateAvatar.js</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" type="text/css" href="AvatarMaker.css">
+    <link rel="stylesheet" type="text/css" href="documentation.css">
+</head>
+
+<div id="nav">
+    <div id="logo"><a href="/home.html">CreateAvatar.js</a></div>
+    <div class="nav-item"><a href="/examples.html">Examples</a></div>
+    <div class="nav-item"><a href="/documentation.html">Documentation</a></div>
+</div>
+
+<div class="page-section">
+    <div id="page-title">Getting Started</div>
+    <div class="step">
+        <div>
+            <strong>1. Download the stylesheet and JavaScript for the library from <a rel="noreferrer" target="_blank"
+                    href="./AvatarMaker.zip" download id="download">here</a>.</strong>
+        </div>
+    </div>
+
+    <div class="step">
+        <div>
+            <strong>2. Include JQuery Library.</strong>
+        </div>
+        <div class="code-container code-white">
+            <pre>&lt;script defer src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js">&lt;/script></pre>
+        </div>
+    </div>
+
+    <div class="step">
+        <div>
+            <strong>3. Link the CSS stylesheet for the library.</strong>
+        </div>
+        <div class="code-container code-white">
+            <pre>&lt;link rel="stylesheet" type="text/css" href="AvatarMaker.css"></pre>
+        </div>
+    </div>
+
+    <div class="step">
+        <div>
+            <strong>4. Include the JavaScript file for the library.</strong>
+        </div>
+        <div class="code-container code-white">
+            <pre>&lt;script defer type="text/javascript" src="./js/AvatarMaker.js">&lt;/script></pre>
+        </div>
+    </div>
+
+    <div class="step">
+        <div>
+            <strong>5. Create a div element in your body. Give it an id. This is where the generator will go. For
+                example: </strong>
+        </div>
+        <div class="code-container code-white">
+            <pre>&lt;div id="generator-container">&lt;/div></pre>
+        </div>
+    </div>
+
+    <div class="step">
+        <div>
+            <strong>6. Create a new JavaScript file and include it in your HTML. Place it after you import the library.
+                For example: </strong>
+        </div>
+        <div class="code-container code-white">
+            <pre>&lt;script defer type="text/javascript" src="./js/example.js">&lt;/script></pre>
+        </div>
+    </div>
+
+    <div class="step">
+        <div>
+            <strong>7. In the JavaScript file, instantiate the library and call <span
+                    class="code-darkblue">createGenerator()</span>. The generator should
+                appear on the page. </strong>
+        </div>
+        <div class="code-container code-white">
+            <pre>const avatar = new AvatarMaker();
+            <br>avatar.createGenerator("#generator-container");</pre>
+        </div>
+    </div>
+</div>
+
+<div class="page-section">
+    <div id="page-title">API</div>
+    <div class="api-method">.createGenerator(domElement)</div>
+    <div class="api-method-description">Creates a generator in the <span class="code-darkblue">domElement</span>
+        specified.</div>
+
+    <div class="api-method">.hide(featureName, isShowing)</div>
+    <div class="api-method-description">Hides feature specified by <span class="code-darkblue">featureName</span> in the
+        <span class="code-darkblue">featureName</span> specified. <span class="code-darkblue">isShowing</span> is true
+        by default. If set to false, the feature will not be shown in the generator.
+        Acceptable arguments for <span class="code-darkblue">featureName</span>:
+        <ul>
+            <li><span class="code-darkblue">"base"</span></li>
+            <li><span class="code-darkblue">"hair"</span></li>
+            <li><span class="code-darkblue">"eyes"</span></li>
+            <li><span class="code-darkblue">"nose"</span></li>
+            <li><span class="code-darkblue">"mouth"</span></li>
+            <li><span class="code-darkblue">"facialHair"</span></li>
+            <li><span class="code-darkblue">"clothes"</span></li>
+            <li><span class="code-darkblue">"accessories"</span></li>
+            <li><span class="code-darkblue">"glasses"</span></li>
+        </ul>
+    </div>
+
+    <div class="api-method">.onSave(function)</div>
+    <div class="api-method-description">The developer can specify what they would like to do when the user clicks save
+        after creating their avatar. The <span class="code-darkblue">function</span> argument must be a function. In the
+        example
+        below, <span class="code-darkblue">onAvatarSave()</span>
+        will be called when
+        the user saves an avatar.
+        <div class="code-container code-white">
+            <pre>
+    const avatarCreator = new AvatarMaker();
+    avatarCreator.createGenerator("generator-container")
+
+    function onAvatarSave() {
+        console.log("Avatar saved!")
+        <div class= "green">
+        // The avatar object will return an object containing an id and the svgs that make up
+        the avatar. This can be saved externally (for ex. to a database) for storage.</div>
+        const avatar = avatarCreator.getAvatars()[avatarCreator.getAvatars().length - 1]
+    }
+
+
+    avatarCreator.onSave(onAvatarSave)
+        </pre>
+        </div>
+    </div>
+
+    <div class="api-method">.displayAvatarGivenSVGs(svgsArray, domElement)</div>
+    <div class="api-method-description">This method can be used to display an avatar by passing in the array of SVGs.
+        This method is useful if you are getting your avatar from an external source and rendering it on the page. The
+        <span class="code-darkblue">svgsArray</span> is an array containing the svgs of all the features. The <span
+            class="code-darkblue">domElement</span> is the id of the element in which you want to render the avatar
+        in. See example
+        below:
+    </div>
+    <div class="code-container code-white">
+        <pre>
+    const avatar = new AvatarMaker()
+
+    <span class = "green">// SVG code not put here to prevent example from taking up too much space on the page. See actual code
+    <a href="https://github.com/csc309-winter-2022/js-library-fazilnur/tree/main/pub/js/documentation.js" >here</a>.</span>
+    const svgs = [`baseSVG`, `hairSVG`, `eyesSVG`, `noseSVG`, `mouthSVG`, `facialHairSVG`, `clothesSVG`,
+    `accessoriesSVG`, `glassesSVG`]
+
+    avatar.displayAvatarGivenSVGs(svgs, "#displaying-example")
+    </pre>
+    </div>
+    <div class="api-method-description">Code above will output: </div>
+    <div id="displaying-example"></div>
+    <br><br><br>
+    <div class="api-method-description"><strong>The following API methods will use the generator below as an
+            example.</strong></div>
+    <div id="displaying-options-example"></div>
+    <br>
+
+    <div class="api-method">.getAvatars()</div>
+    <div class="api-method-description">This will return an array of all the avatar objects that are saved. Important:
+        If page is refreshed, previously saved avatars will be lost.
+        <br>
+        To see this function in action, follow these steps:
+        <ol>
+            <li>Create an avatar in the generator above.</li>
+            <li>Click save.</li>
+            <li>Click the "Get Avatars" button below. In the console, you will see an array with all the saved avatar
+                objects.</li>
+            <li>Repeat steps 1-3 to create more avatars.</li>
+        </ol>
+    </div>
+    <button id="get-avatars-btn">Get Avatars</button>
+    <div class="api-method-description">The code looks like this: </div>
+    <div class="code-container code-white">
+        <pre>
+    document.getElementById("get-avatars-btn").addEventListener("click", () => {
+        const avatars = avatarMaker.getAvatars();
+        console.log(avatars)
+    });
+    </pre>
+    </div>
+
+    <br>
+    <div class="api-method">.displayAllAvatars(domElement)</div>
+    <div class="api-method-description">
+        Use this method to display all the saved avatars in the specified <span class="code-darkblue">domElement</span>.
+        Important:
+        If page is refreshed, previously saved avatars will be lost.
+        <br>
+        To see this function in action, follow these steps:
+        <ol>
+            <li>Create an avatar in the generator above.</li>
+            <li>Click save.</li>
+            <li>Click the "Display Avatars" button below. If there any saved avatars, they will appear below.</li>
+            <li>Repeat steps 1-3 to create more avatars and display them.</li>
+        </ol>
+    </div>
+    <button id="display-avatars-btn">Display Avatars</button>
+    <div id="container-to-display-avatars-in"></div>
+    <div class="api-method-description">The code looks like this: </div>
+    <div class="code-container code-white">
+        <pre>
+    document.getElementById("display-avatars-btn").addEventListener("click", () => {
+        avatarMaker.displayAllAvatars("#container-to-display-avatars-in");
+    });
+    </pre>
+    </div>
+
+
+    <br>
+    <div class="api-method">.getAvatar(avatarID)</div>
+    <div class="api-method-description">Given the <span class="code-darkblue">avatarID</span>, this method will return
+        the avatar object which contains an id and an array of all the feature SVGs. Important:
+        If page is refreshed, previously saved avatars will be lost.
+        <br>
+        To see this function in action, follow these steps:
+        <ol>
+            <li>Create an avatar in the generator above.</li>
+            <li>Click save.</li>
+            <li>Click the "Get Avatars" button above. In the console, use the output to get an id of an avatar.</li>
+            <li>Enter the id in the input below.</li>
+            <li>Click "Get Avatar" button below to get the corresponding avatar for that id. The avatar object will be
+                returned in the console.</li>
+            <li>Repeat steps 1-5 to get different avatars.</li>
+        </ol>
+    </div>
+    <input type="text" id="avatar-id-input">
+    <button id="get-avatar-btn">Get Avatar</button>
+    <div class="api-method-description">The code looks like this: </div>
+    <div class="code-container code-white">
+        <pre>
+    document.getElementById("get-avatar-btn").addEventListener("click", (e) => {
+        var avatarId = document.getElementById("avatar-id-input").value;
+        const avatar = avatarMaker.getAvatar(avatarId);
+        console.log(avatar)
+    })
+    </pre>
+    </div>
+
+    <br>
+    <div class="api-method">.displayAvatarGivenId(avatarID, domElement)</div>
+    <div class="api-method-description">Given the <span class="code-darkblue">avatarID</span>, this method will display
+        the avatar in the specified <span class="code-darkblue">domElement</span>. Important:
+        If page is refreshed, previously saved avatars will be lost.
+        <br>
+        To see this function in action, follow these steps:
+        <ol>
+            <li>Create an avatar in the generator above.</li>
+            <li>Click save.</li>
+            <li>Click the "Get Avatars" button above. In the console, use the output to get an id of an avatar.</li>
+            <li>Enter the id in the input below.</li>
+            <li>Click "Display Avatar" button below to see the avatar below.</li>
+            <li>Repeat steps 1-5 to get different avatars.</li>
+        </ol>
+    </div>
+
+    <input type="text" id="avatar-id-input2">
+    <button id="display-avatar-btn">Display Avatar</button>
+    <div id="container-to-display-avatar-in"></div>
+    <div class="api-method-description">The code looks like this: </div>
+    <div class="code-container code-white">
+        <pre>
+    document.getElementById("display-avatar-btn").addEventListener("click", (e) => {
+        var avatarId = document.getElementById("avatar-id-input2").value;
+        avatarMaker.displayAvatarGivenId(avatarId, "#container-to-display-avatar-in");
+    })
+    </pre>
+    </div>
+</div>
+
+
+<body>
+    <script defer src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script defer type="text/javascript" src="./js/AvatarMaker.js"></script>
+    <script defer type="text/javascript" src="./js/documentation.js"></script>
+</body>
+
+</html>
